@@ -1,6 +1,6 @@
-const VERSION = 'crimsoncut-v1';
+const VERSION = 'crimsoncut-v2';
 const ASSETS = [
-  './', 'index.html', 'styles.css', 'app.js', 'ads.js', 'config.js',
+  './', 'index.html', 'styles.css', 'app.js', 'compositor.js', 'media.js', 'ads.js', 'config.js',
   'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png'
 ];
 
