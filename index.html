@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CrimsonCut – Video Editor</title>
+<meta name="description" content="Edit videos on your phone: split, cut, delete, adjust volume, add sounds and convert formats.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Inline icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4.5" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4.5" height="14" rx="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M6 5v14M19 5l-9 7 9 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M18 5v14M5 5l9 7-9 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5M20 9H10a6 6 0 0 0 0 12h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24"><path d="M12 3v18M8 8l-4 4 4 4M16 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cutl" viewBox="0 0 24 24"><path d="M5 4v16M9 12h11M13 8l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cutr" viewBox="0 0 24 24"><path d="M19 4v16M15 12H4M11 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16.5 9a4 4 0 0 1 0 6M19 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 7.5 20 18M8.5 16.5 20 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v6M9.5 11.5 12 14l2.5-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- Full-screen ad shown on every app load -->
+<div id="adGate" role="dialog" aria-label="Advertisement">
+  <div class="ad-top">
+    <span class="ad-badge">Advertisement</span>
+    <button id="adClose" class="ad-close" disabled>Continue in <b id="adCount">5</b></button>
+  </div>
+  <div class="ad-body" id="adBody">
+    <div class="ad-brand">
+      <svg class="ad-logo"><use href="#i-scissors"/></svg>
+      <span>CrimsonCut</span>
+    </div>
+  </div>
+  <div class="ad-foot">Ads keep CrimsonCut free</div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="brand"><svg class="logo"><use href="#i-scissors"/></svg><span>Crimson<b>Cut</b></span></div>
+    <div class="hdr-actions">
+      <button class="icon-btn" id="btnInstall" title="Install app" hidden><svg><use href="#i-install"/></svg></button>
+      <button class="icon-btn" id="btnUndo" title="Undo" disabled><svg><use href="#i-undo"/></svg></button>
+      <button class="icon-btn" id="btnRedo" title="Redo" disabled><svg><use href="#i-redo"/></svg></button>
+      <button class="icon-btn" id="btnOpen" title="Open video"><svg><use href="#i-film"/></svg></button>
+      <button class="btn-primary" id="btnExport" disabled><svg><use href="#i-export"/></svg>Export</button>
+    </div>
+    <input type="file" id="fileVideo" accept="video/*" hidden>
+    <input type="file" id="fileSound" accept="audio/*" multiple hidden>
+  </header>
+
+  <section id="stage">
+    <video id="video" playsinline preload="auto"></video>
+    <button id="empty" class="empty">
+      <span class="empty-ico"><svg><use href="#i-film"/></svg></span>
+      <strong>Open a video</strong>
+      <small>Tap to choose from your phone</small>
+    </button>
+  </section>
+
+  <section id="transport">
+    <div class="t-left">
+      <button class="icon-btn" id="btnPrev" title="Back one frame"><svg><use href="#i-back"/></svg></button>
+      <button class="play-btn" id="btnPlay" title="Play / pause"><svg id="playIco"><use href="#i-play"/></svg></button>
+      <button class="icon-btn" id="btnNext" title="Forward one frame"><svg><use href="#i-fwd"/></svg></button>
+    </div>
+    <div class="time"><span id="tCur">0:00.0</span><span class="sep">/</span><span id="tTot">0:00.0</span></div>
+    <div class="t-right">
+      <button class="icon-btn" id="zoomOut" title="Zoom out"><svg><use href="#i-minus"/></svg></button>
+      <button class="icon-btn" id="zoomIn" title="Zoom in"><svg><use href="#i-plus"/></svg></button>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div id="tlScroll">
+      <div id="tlInner">
+        <div id="track"></div>
+      </div>
+    </div>
+  </section>
+
+  <nav id="tabs">
+    <button class="tab on" data-tab="edit"><svg><use href="#i-split"/></svg><span>Edit</span></button>
+    <button class="tab" data-tab="vol"><svg><use href="#i-vol"/></svg><span>Volume</span></button>
+    <button class="tab" data-tab="sfx"><svg><use href="#i-note"/></svg><span>Sounds</span></button>
+    <button class="tab" data-tab="shield"><svg><use href="#i-shield"/></svg><span>Shield</span></button>
+  </nav>
+
+  <section id="panel">
+    <!-- EDIT -->
+    <div class="pane on" id="pane-edit">
+      <div class="tools">
+        <button class="tool" id="toolSplit"><svg><use href="#i-split"/></svg><span>Split</span></button>
+        <button class="tool" id="toolCutL"><svg><use href="#i-cutl"/></svg><span>Cut before</span></button>
+        <button class="tool" id="toolCutR"><svg><use href="#i-cutr"/></svg><span>Cut after</span></button>
+        <button class="tool danger" id="toolDel"><svg><use href="#i-trash"/></svg><span>Delete</span></button>
+      </div>
+      <p class="hint">Edits apply to the clip under the playhead. <b>Split</b> divides it, <b>Cut</b> trims everything before or after the playhead, <b>Delete</b> removes it.</p>
+      <button class="link" id="btnReset">Reset all edits</button>
+    </div>
+
+    <!-- VOLUME -->
+    <div class="pane" id="pane-vol">
+      <div class="row between"><span class="label" id="volLabel">Clip 1</span><b class="pct" id="volPct">100%</b></div>
+      <input type="range" id="volRange" min="0" max="200" value="100">
+      <div class="row gap">
+        <button class="chip-btn" id="volMute">Mute clip</button>
+        <button class="chip-btn" id="volReset">100%</button>
+        <button class="chip-btn" id="volAll">Apply to all</button>
+      </div>
+      <p class="hint">Want a different level for just one part? <b>Split</b> around it first, then set that clip's volume.</p>
+    </div>
+
+    <!-- SOUNDS -->
+    <div class="pane" id="pane-sfx">
+      <div class="row gap wrap">
+        <button class="chip-btn accent" id="sfxAdd"><svg><use href="#i-plus"/></svg>Add from phone</button>
+        <button class="chip-btn" data-synth="ding">Ding</button>
+        <button class="chip-btn" data-synth="pop">Pop</button>
+        <button class="chip-btn" data-synth="whoosh">Whoosh</button>
+        <button class="chip-btn" data-synth="boom">Boom</button>
+        <button class="chip-btn" data-synth="bleep">Bleep</button>
+      </div>
+      <p class="hint" id="sfxHint">Sounds are placed at the playhead. Drag them on the timeline or set an exact time.</p>
+      <div id="sfxList"></div>
+    </div>
+
+    <!-- SHIELD -->
+    <div class="pane" id="pane-shield">
+      <label class="switch-row">
+        <span>
+          <b>Auto-silence suspected copyrighted music</b>
+          <small>Finds sustained music-like audio and mutes it on export.</small>
+        </span>
+        <input type="checkbox" id="shieldOn" class="switch">
+      </label>
+      <div class="row between"><span class="label">Sensitivity</span><b class="pct" id="sensPct">55</b></div>
+      <input type="range" id="sensRange" min="0" max="100" value="55">
+      <div class="row gap">
+        <button class="chip-btn accent" id="btnScan">Scan audio</button>
+        <span class="status" id="scanStatus">Not scanned yet</span>
+      </div>
+      <div id="flagList" class="flags"></div>
+      <p class="hint warn">This is an on-device estimate. It can't identify specific songs or confirm copyright, so review the highlighted parts before publishing.</p>
+    </div>
+  </section>
+</div>
+
+<!-- EXPORT -->
+<div id="exportModal" class="modal" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>Export &amp; convert</h2>
+      <button class="icon-btn" id="expX" title="Close"><svg style="transform:rotate(45deg)"><use href="#i-plus"/></svg></button>
+    </div>
+    <div id="expForm">
+      <label class="field"><span>Format</span><select id="fmt"></select></label>
+      <div class="two" id="videoOpts">
+        <label class="field"><span>Resolution</span>
+          <select id="res"><option value="0">Original</option><option value="1080">1080p</option><option value="720" selected>720p</option><option value="480">480p</option></select>
+        </label>
+        <label class="field"><span>Quality</span>
+          <select id="qual"><option value="1.0">High</option><option value="0.6" selected>Balanced</option><option value="0.3">Small file</option></select>
+        </label>
+      </div>
+      <label class="field"><span>File name</span><input type="text" id="fname" value="crimsoncut-export"></label>
+      <p class="hint" id="expNote"></p>
+      <button class="btn-primary wide" id="expStart"><svg><use href="#i-export"/></svg>Start export</button>
+    </div>
+    <div id="expProgress" hidden>
+      <div class="bar"><i id="barFill"></i></div>
+      <p class="hint center" id="expStatus">Rendering… keep this screen open</p>
+      <button class="btn-ghost wide" id="expCancel">Cancel</button>
+    </div>
+    <div id="expDone" hidden>
+      <p class="done-msg">Your video is ready</p>
+      <p class="hint center" id="doneInfo"></p>
+      <div class="two">
+        <button class="btn-primary wide" id="expSave"><svg><use href="#i-export"/></svg>Save</button>
+        <button class="btn-ghost wide" id="expShare">Share</button>
+      </div>
+      <button class="link center" id="expAgain">Back to editor</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="ads.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
