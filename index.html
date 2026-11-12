@@ -34,10 +34,6 @@
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 7.5 20 18M8.5 16.5 20 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5zM3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-wand" viewBox="0 0 24 24"><path d="m4 20 11-11M14 5l1-2 1 2 2 1-2 1-1 2-1-2-2-1zM18 13l.7-1.4.7 1.4 1.4.7-1.4.7-.7 1.4-.7-1.4-1.4-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="1.7" fill="currentColor"/><path d="m4 17 5-4.5 4 3.5 3-2.5 4 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
-    <symbol id="i-pick" viewBox="0 0 24 24"><path d="m14 4 6 6-3 1-8 8H5v-4l8-8zM13 5l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-install" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v6M9.5 11.5 12 14l2.5-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
@@ -69,15 +65,10 @@
     </div>
     <input type="file" id="fileVideo" accept="video/*" hidden>
     <input type="file" id="fileSound" accept="audio/*" multiple hidden>
-    <input type="file" id="fileImg" accept="image/*" multiple hidden>
-    <input type="file" id="fileOvl" accept="video/*" multiple hidden>
   </header>
 
   <section id="stage">
     <video id="video" playsinline preload="auto"></video>
-    <canvas id="view" width="16" height="9"></canvas>
-    <div id="selBox" hidden></div>
-    <div id="pickHint" hidden>Tap the colour to remove</div>
     <button id="empty" class="empty">
       <span class="empty-ico"><svg><use href="#i-film"/></svg></span>
       <strong>Open a video</strong>
@@ -110,8 +101,6 @@
     <button class="tab on" data-tab="edit"><svg><use href="#i-split"/></svg><span>Edit</span></button>
     <button class="tab" data-tab="vol"><svg><use href="#i-vol"/></svg><span>Volume</span></button>
     <button class="tab" data-tab="sfx"><svg><use href="#i-note"/></svg><span>Sounds</span></button>
-    <button class="tab" data-tab="layers"><svg><use href="#i-layers"/></svg><span>Layers</span></button>
-    <button class="tab" data-tab="green"><svg><use href="#i-wand"/></svg><span>Green</span></button>
     <button class="tab" data-tab="shield"><svg><use href="#i-shield"/></svg><span>Shield</span></button>
   </nav>
 
@@ -152,37 +141,6 @@
       </div>
       <p class="hint" id="sfxHint">Sounds are placed at the playhead. Drag them on the timeline or set an exact time.</p>
       <div id="sfxList"></div>
-    </div>
-
-    <!-- LAYERS -->
-    <div class="pane" id="pane-layers">
-      <div class="row gap wrap" style="margin-top:0">
-        <button class="chip-btn accent" id="layAddImg"><svg><use href="#i-image"/></svg>Add image</button>
-        <button class="chip-btn accent" id="layAddVid"><svg><use href="#i-film"/></svg>Add video</button>
-      </div>
-      <p class="hint" id="layHint">Images and videos sit on top of the main video. Drag them in the preview, pinch to resize.</p>
-      <div id="layList"></div>
-    </div>
-
-    <!-- GREEN SCREEN -->
-    <div class="pane" id="pane-green">
-      <div class="chips" id="keyTargets"></div>
-      <label class="switch-row">
-        <span><b>Remove green screen</b><small id="keySub">Makes the chosen colour transparent.</small></span>
-        <input type="checkbox" id="keyOn" class="switch">
-      </label>
-      <div class="row gap wrap" style="margin-top:2px">
-        <label class="swatch"><input type="color" id="keyColor" value="#00ff00"><span>Key colour</span></label>
-        <button class="chip-btn" id="keyPick"><svg><use href="#i-pick"/></svg>Pick from video</button>
-      </div>
-      <div class="row between"><span class="label">Strength</span><b class="pct" id="keySimPct">50</b></div>
-      <input type="range" id="keySim" min="0" max="100" value="50">
-      <div class="row between"><span class="label">Edge softness</span><b class="pct" id="keySmPct">33</b></div>
-      <input type="range" id="keySm" min="0" max="100" value="33">
-      <div id="keyBgRow" class="row gap" hidden>
-        <label class="swatch"><input type="color" id="keyBg" value="#000000"><span>Background colour</span></label>
-        <span class="status">or add an image set to “Behind main video”</span>
-      </div>
     </div>
 
     <!-- SHIELD -->
@@ -229,7 +187,6 @@
     </div>
     <div id="expProgress" hidden>
       <div class="bar"><i id="barFill"></i></div>
-      <div class="pct pctbig" id="expPct">0%</div>
       <p class="hint center" id="expStatus">Rendering… keep this screen open</p>
       <button class="btn-ghost wide" id="expCancel">Cancel</button>
     </div>
@@ -249,8 +206,6 @@
 
 <script src="config.js"></script>
 <script src="ads.js"></script>
-<script src="compositor.js"></script>
-<script src="media.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
